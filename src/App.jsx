@@ -23,22 +23,10 @@ const list =
   },
 ];
 
-function App()
+function List()
 {
-  const title = 'React';
-
-  return (
-    <>
-      <div>
-        <h1>My Hacker Stories</h1>
-
-        <label htmlFor='search'>Search:</label>
-        <input id='search' type='text'/>
-      </div>
-
-      <hr/>
-
-      <ul>
+  return(
+    <ul>
         {list.map(function(item)
         {
           return (
@@ -53,6 +41,34 @@ function App()
           );
         })}
       </ul>
+  );
+}
+
+function Search()
+{
+  return (
+    <div>
+      <label htmlFor='search'>Search:</label>
+      <input id='search' type='text'/>
+    </div>
+  );
+}
+
+function App()
+{
+  const title = 'React';
+
+  return (
+    <>
+      <div>
+        <h1>My Hacker Stories</h1>
+
+        <Search />
+      </div>
+
+      <hr/>
+
+      <List />
     </>
   )
 }
