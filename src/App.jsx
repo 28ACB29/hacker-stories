@@ -36,6 +36,8 @@ const List = (props) =>
 
 const Search = () =>
 {
+
+  const [searchTerm, setSearchTerm] = React.useState('');
   const handleChange = (event) =>
   {
 
@@ -43,6 +45,7 @@ const Search = () =>
     console.log(event);
 
     //value of target (here: input HTML element)
+    setSearchTerm(event.target.value);
     console.log(event.target.value);
   };
 
@@ -50,6 +53,10 @@ const Search = () =>
     <div>
       <label htmlFor='search'>Search:</label>
       <input id='search' type='text' onChange={handleChange}/>
+
+      <p>
+        Searching for <strong>{searchTerm}</strong>
+      </p>
     </div>
   );
 }
