@@ -37,34 +37,12 @@ const List = (props) =>
   );
 }
 
-const Search = (props) =>
-{
-
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const handleChange = (event) =>
-  {
-
-    //synthetic event
-    console.log(event);
-
-    //value of target (here: input HTML element)
-    setSearchTerm(event.target.value);
-    console.log(event.target.value);
-
-    props.onSearch(event);
-  };
-
-  return (
-    <div>
-      <label htmlFor='search'>Search:</label>
-      <input id='search' type='text' onChange={handleChange}/>
-
-      <p>
-        Searching for <strong>{searchTerm}</strong>
-      </p>
-    </div>
-  );
-}
+const Search = (props) => (
+  <div>
+    <label htmlFor='search'>Search:</label>
+    <input id='search' type='text' onChange={props.onSearch}/>
+  </div>
+);
 
 const App = () =>
 {
@@ -90,10 +68,23 @@ const App = () =>
     },
   ];
 
+  const [searchTerm, setSearchTerm] = React.useState('');
+
   const handleSearch = (event) =>
   {
+
+    //synthetic event
+    console.log(event);
+
+    //value of target (here: input HTML element)
+    setSearchTerm(event.target.value);
     console.log(event.target.value);
   }
+
+  const searchedStories = stories.filter(function(story)
+  {
+    return story.title.toLowerCase().includes(searchTerm);
+  });
 
   return (
     <>
@@ -101,11 +92,15 @@ const App = () =>
         <h1>My Hacker Stories</h1>
 
         <Search onSearch={handleSearch}/>
+
+        <p>
+          Searching for <strong>{searchTerm}</strong>
+        </p>
       </div>
 
       <hr/>
 
-      <List list={stories}/>
+      <List list={searchedStories}/>
     </>
   )
 }
