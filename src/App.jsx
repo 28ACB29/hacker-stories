@@ -47,9 +47,9 @@ const Search = (props) =>
     //value of target (here: input HTML element)
     setSearchTerm(event.target.value);
     console.log(event.target.value);
-  };
 
-  props.onSearch(event);
+    props.onSearch(event);
+  };
 
   return (
     <div>
