@@ -6,23 +6,23 @@ import viteLogo from '/vite.svg'
 
 import './App.css'
 
-const Item = (props) => (
-  <li key={props.item.objectID}>
+const Item = ({item}) => (
+  <li key={item.objectID}>
     <span>
-      <a href={props.item.url}>{props.item.title}</a>
+      <a href={item.url}>{item.title}</a>
     </span>
-    <span>{props.item.author}</span>
-    <span>{props.item.num_comments}</span>
-    <span>{props.item.points}</span>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
   </li>
 );
 
-const List = (props) =>
+const List = ({list}) =>
 {
   return(
     <ul>
         {
-          props.list.map((item) => (
+          list.map((item) => (
             <li key={item.objectID}>
               <span>
                 <a href={item.url}>{item.title}</a>
@@ -37,12 +37,16 @@ const List = (props) =>
   );
 }
 
-const Search = (props) => (
-  <div>
-    <label htmlFor='search'>Search:</label>
-    <input id='search' type='text' value={props.search} onChange={props.onSearch}/>
-  </div>
-);
+const Search = (props) =>
+{
+  const {search, onSearch} = props;
+  return (
+    <div>
+      <label htmlFor='search'>Search:</label>
+      <input id='search' type='text' value={search} onChange={onSearch}/>
+    </div>
+  );
+}
 
 const App = () =>
 {
