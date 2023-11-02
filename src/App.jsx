@@ -37,9 +37,8 @@ const List = ({list}) =>
   );
 }
 
-const Search = (props) =>
+const Search = ({search, onSearch}) =>
 {
-  const {search, onSearch} = props;
   return (
     <>
       <label htmlFor='search'>Search:</label>
