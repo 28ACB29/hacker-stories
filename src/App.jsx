@@ -118,7 +118,7 @@ const App = () =>
       <div>
         <h1>My Hacker Stories</h1>
 
-        <InputWithLabel id="search" value={searchTerm} onInputChange={handleSearch}>
+        <InputWithLabel id="search" value={searchTerm} isFocused onInputChange={handleSearch}>
           <strong>Search:</strong>
         </InputWithLabel>
 
