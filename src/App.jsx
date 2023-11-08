@@ -6,6 +6,14 @@ import viteLogo from '/vite.svg'
 
 import './App.css'
 
+const getAsyncStories = () =>
+  new Promise((resolve) =>
+    setTimeout(() =>
+      resolve({ data: { stories: initialStories } }),
+      2000
+    )
+  );
+
 const initialStories = 
 [
   {
@@ -68,7 +76,8 @@ const List = ({list, onRemoveItem}) =>
   return(
     <ul>
         {
-          list.map((item) => (
+          list.map((item) =>
+          (
             <Item key={item.objectID} item={item} onRemoveItem={onRemoveItem}/>
           ))
         }
@@ -95,7 +104,16 @@ const App = () =>
 
   const [searchTerm, setSearchTerm] = useStorageState('search', 'React');
 
-  const [stories, setStories] = React.useState(initialStories);
+  const [stories, setStories] = React.useState([]);
+
+  React.useEffect(() =>
+  {
+    getAsyncStories().then((result) =>
+    {
+      setStories(result.data.stories);
+    });
+  },
+  []);
 
   const handleRemoveStory = (item) =>
   {
