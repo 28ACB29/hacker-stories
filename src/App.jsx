@@ -17,26 +17,6 @@ const Item = ({item}) => (
   </li>
 );
 
-const List = ({list}) =>
-{
-  return(
-    <ul>
-        {
-          list.map((item) => (
-            <li key={item.objectID}>
-              <span>
-                <a href={item.url}>{item.title}</a>
-              </span>
-              <span>{item.author}</span>
-              <span>{item.num_comments}</span>
-              <span>{item.points}</span>
-            </li>
-          ))
-        }
-      </ul>
-  );
-}
-
 const InputWithLabel = ({id, value, type='text', onInputChange, isFocused, children}) =>
 {
   const inputRef = React.useRef();
@@ -55,6 +35,19 @@ const InputWithLabel = ({id, value, type='text', onInputChange, isFocused, child
       <label htmlFor={id}>{children}</label>
       <input ref={inputRef} id={id} type={type} value={value} autoFocus={isFocused} onChange={onInputChange}/>
     </>
+  );
+}
+
+const List = ({list}) =>
+{
+  return(
+    <ul>
+        {
+          list.map((item) => (
+            <Item key={item.objectID} item={item}/>
+          ))
+        }
+      </ul>
   );
 }
 
