@@ -6,6 +6,8 @@ import viteLogo from '/vite.svg'
 
 import './App.css'
 
+const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
+
 const getAsyncStories = () =>
   new Promise((resolve) =>
     setTimeout(() =>
@@ -150,13 +152,15 @@ const App = () =>
       type: 'STORIES_FETCH_INIT'
     });
 
-    getAsyncStories()
+    fetch(`${API_ENDPOINT}react`)
+      .then((response) =>
+        response.json())
       .then((result) =>
       {
         dispatchStories(
         {
           type: 'SET_STORIES',
-          payload: result.data.stories,
+          payload: result.hits,
         });
       })
       .catch(() =>
