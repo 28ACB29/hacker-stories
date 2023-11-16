@@ -147,29 +147,34 @@ const App = () =>
   React.useEffect(() =>
   {
 
-    dispatchStories(
+    //Only do something if searchTerm is not empty
+    if (searchTerm)
     {
-      type: 'STORIES_FETCH_INIT'
-    });
 
-    fetch(`${API_ENDPOINT}react`)
-      .then((response) =>
-        response.json())
-      .then((result) =>
+      dispatchStories(
       {
-        dispatchStories(
+        type: 'STORIES_FETCH_INIT'
+      });
+  
+      fetch(`${API_ENDPOINT}${searchTerm}`)
+        .then((response) =>
+          response.json())
+        .then((result) =>
         {
-          type: 'SET_STORIES',
-          payload: result.hits,
-        });
-      })
-      .catch(() =>
-        dispatchStories(
-        {
-          type: 'STORIES_FETCH_FAILURE'
-        }));
+          dispatchStories(
+          {
+            type: 'SET_STORIES',
+            payload: result.hits,
+          });
+        })
+        .catch(() =>
+          dispatchStories(
+          {
+            type: 'STORIES_FETCH_FAILURE'
+          }));
+    }
   },
-  []);
+  [searchTerm]);
 
   const handleRemoveStory = (item) =>
   {
@@ -190,11 +195,6 @@ const App = () =>
     setSearchTerm(event.target.value);
     console.log(event.target.value);
   }
-
-  const searchedStories = stories.filter(function(story)
-  {
-    return story.title.toLowerCase().includes(searchTerm);
-  });
 
   return (
     <>
@@ -217,7 +217,7 @@ const App = () =>
       {
         stories.isLoading ?
           (<p>Loading...</p>) :
-          (<List list={searchedStories} onRemoveItem={handleRemoveStory}/>)
+          (<List list={stories.data} onRemoveItem={handleRemoveStory}/>)
       }
     </>
   )
