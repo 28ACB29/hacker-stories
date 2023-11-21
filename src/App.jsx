@@ -144,19 +144,17 @@ const App = () =>
       isError: false
     });
 
+  const [url, setUrl] = React.useState(`${API_ENDPOINT}${searchTerm}`);
+
   const handleFetchStories = React.useCallback(() =>
   {
 
-    //Only do something if searchTerm is not empty
-    if (searchTerm)
-    {
-
-      dispatchStories(
+    dispatchStories(
       {
         type: 'STORIES_FETCH_INIT'
       });
   
-      fetch(`${API_ENDPOINT}${searchTerm}`)
+      fetch(url)
         .then((response) =>
           response.json())
         .then((result) =>
@@ -172,9 +170,8 @@ const App = () =>
           {
             type: 'STORIES_FETCH_FAILURE'
           }));
-    }
   },
-  [searchTerm]);
+  [url]);
 
   React.useEffect(() =>
   {
@@ -191,7 +188,7 @@ const App = () =>
     });
   };
 
-  const handleSearch = (event) =>
+  const handleSearchSubmit = (event) =>
   {
 
     //synthetic event
@@ -207,9 +204,10 @@ const App = () =>
       <div>
         <h1>My Hacker Stories</h1>
 
-        <InputWithLabel id="search" value={searchTerm} isFocused onInputChange={handleSearch}>
+        <InputWithLabel id="search" value={searchTerm} isFocused onInputChange={handleSearchSubmit}>
           <strong>Search:</strong>
         </InputWithLabel>
+        <button type="button" disabled={!searchTerm} onClick={handleSearchSubmit}>Submit</button>
 
         <p>
           Searching for <strong>{searchTerm}</strong>
