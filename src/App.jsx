@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
@@ -154,22 +155,21 @@ const App = () =>
         type: 'STORIES_FETCH_INIT'
       });
   
-      fetch(url)
-        .then((response) =>
-          response.json())
-        .then((result) =>
+      axios
+      .get(url)
+      .then((result) =>
+      {
+        dispatchStories(
         {
-          dispatchStories(
-          {
-            type: 'SET_STORIES',
-            payload: result.hits,
-          });
-        })
-        .catch(() =>
-          dispatchStories(
-          {
-            type: 'STORIES_FETCH_FAILURE'
-          }));
+          type: 'SET_STORIES',
+          payload: result.hits,
+        });
+      })
+      .catch(() =>
+        dispatchStories(
+        {
+          type: 'STORIES_FETCH_FAILURE'
+        }));
   },
   [url]);
 
