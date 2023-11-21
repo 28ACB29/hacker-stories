@@ -144,7 +144,7 @@ const App = () =>
       isError: false
     });
 
-  React.useEffect(() =>
+  const handleFetchStories = React.useCallback(() =>
   {
 
     //Only do something if searchTerm is not empty
@@ -175,6 +175,12 @@ const App = () =>
     }
   },
   [searchTerm]);
+
+  React.useEffect(() =>
+  {
+    handleFetchStories();
+  },
+  [handleFetchStories]);
 
   const handleRemoveStory = (item) =>
   {
