@@ -161,7 +161,7 @@ const App = () =>
       dispatchStories(
       {
         type: 'SET_STORIES',
-        payload: result.hits,
+        payload: result.data.hits,
       });
     }
     catch
