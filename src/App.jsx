@@ -189,7 +189,7 @@ const App = () =>
     });
   };
 
-  const handleSearchSubmit = (event) =>
+  const handleSearchInput = (event) =>
   {
 
     //synthetic event
@@ -200,12 +200,17 @@ const App = () =>
     console.log(event.target.value);
   }
 
+  const handleSearchSubmit = () =>
+  {
+    setUrl(`${API_ENDPOINT}${searchTerm}`);
+  };
+
   return (
     <>
       <div>
         <h1>My Hacker Stories</h1>
 
-        <InputWithLabel id="search" value={searchTerm} isFocused onInputChange={handleSearchSubmit}>
+        <InputWithLabel id="search" value={searchTerm} isFocused onInputChange={handleSearchInput}>
           <strong>Search:</strong>
         </InputWithLabel>
         <button type="button" disabled={!searchTerm} onClick={handleSearchSubmit}>Submit</button>
