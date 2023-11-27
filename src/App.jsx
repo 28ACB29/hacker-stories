@@ -88,6 +88,25 @@ const List = ({list, onRemoveItem}) =>
   );
 }
 
+const SearchForm = ({searchTerm, onSearchInput, onSearchSubmit}) =>
+{
+  return (
+    <form onSubmit={onSearchSubmit}>
+      <InputWithLabel id="search" value={searchTerm} isFocused onInputChange={onSearchInput}>
+        <strong>Search:</strong>
+      </InputWithLabel>
+  
+      <button type="submit" disabled={!searchTerm}>
+        Submit
+      </button>
+
+      <p>
+        Searching for <strong>{searchTerm}</strong>
+      </p>
+    </form>
+  );
+}
+
 const storiesReducer = (state, action) =>
 {
   switch (action.type)
@@ -203,21 +222,15 @@ const App = () =>
   const handleSearchSubmit = () =>
   {
     setUrl(`${API_ENDPOINT}${searchTerm}`);
-  };
+
+    event.preventDefault();
+  }
 
   return (
     <>
       <div>
         <h1>My Hacker Stories</h1>
-
-        <InputWithLabel id="search" value={searchTerm} isFocused onInputChange={handleSearchInput}>
-          <strong>Search:</strong>
-        </InputWithLabel>
-        <button type="button" disabled={!searchTerm} onClick={handleSearchSubmit}>Submit</button>
-
-        <p>
-          Searching for <strong>{searchTerm}</strong>
-        </p>
+        <SearchForm searchTerm={searchTerm} onSearchInput={handleSearchInput} onSearchSubmit={handleSearchSubmit}/>
       </div>
 
       <hr/>
@@ -230,7 +243,7 @@ const App = () =>
           (<List list={stories.data} onRemoveItem={handleRemoveStory}/>)
       }
     </>
-  )
+  );
 }
 
 export default App
